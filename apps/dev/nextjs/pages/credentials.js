@@ -58,6 +58,17 @@ export default function Page() {
       <button onClick={handleLogin({ redirect: false, password: "" })}>
         Login
       </button>
+      <br />
+      <span className="spacing">Extra headers:</span>
+      <button
+        onClick={handleLogin({
+          redirect: false,
+          password: "",
+          headers: { Foo: "Bar" },
+        })}
+      >
+        Login
+      </button>
       <p>Response:</p>
       <pre style={{ background: "#eee", padding: 16 }}>
         {JSON.stringify(response, null, 2)}

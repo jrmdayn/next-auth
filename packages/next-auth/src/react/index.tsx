@@ -222,7 +222,9 @@ export async function signIn<
 ): Promise<
   P extends RedirectableProviderType ? SignInResponse | undefined : undefined
 > {
-  const { callbackUrl = window.location.href, redirect = true } = options ?? {}
+  const { headers, ...optionsWithoutHeaders } = options ?? {}
+  const { callbackUrl = window.location.href, redirect = true } =
+    optionsWithoutHeaders
 
   const baseUrl = apiBaseUrl(__NEXTAUTH)
   const providers = await getProviders()
@@ -252,11 +254,12 @@ export async function signIn<
   const res = await fetch(_signInUrl, {
     method: "post",
     headers: {
+      ...headers,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     // @ts-expect-error
     body: new URLSearchParams({
-      ...options,
+      ...optionsWithoutHeaders,
       csrfToken: await getCsrfToken(),
       callbackUrl,
       json: true,
@@ -297,11 +300,12 @@ export async function signIn<
 export async function signOut<R extends boolean = true>(
   options?: SignOutParams<R>
 ): Promise<R extends true ? undefined : SignOutResponse> {
-  const { callbackUrl = window.location.href } = options ?? {}
+  const { callbackUrl = window.location.href, headers } = options ?? {}
   const baseUrl = apiBaseUrl(__NEXTAUTH)
   const fetchOptions = {
     method: "post",
     headers: {
+      ...headers,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     // @ts-expect-error

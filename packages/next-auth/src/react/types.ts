@@ -32,6 +32,8 @@ export interface SignInOptions extends Record<string, unknown> {
   callbackUrl?: string
   /** [Documentation](https://next-auth.js.org/getting-started/client#using-the-redirect-false-option) */
   redirect?: boolean
+
+  headers?: Record<string, string>
 }
 
 export interface SignInResponse {
@@ -58,6 +60,8 @@ export interface SignOutParams<R extends boolean = true> {
   callbackUrl?: string
   /** [Documentation](https://next-auth.js.org/getting-started/client#using-the-redirect-false-option-1 */
   redirect?: R
+
+  headers?: Record<string, string>
 }
 
 /** [Documentation](https://next-auth.js.org/getting-started/client#options) */
